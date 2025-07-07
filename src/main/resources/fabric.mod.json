@@ -1,0 +1,50 @@
+{
+	"schemaVersion": 1,
+	"id": "babelfish",
+	"version": "${version}",
+	"name": "Babel Fish",
+	"description": "Translate player messages!",
+	"authors": [
+		"Aullisia"
+	],
+	"contact": {
+		"homepage": "https://www.aullisia.dev/",
+		"sources": "https://github.com/aullisia/Babel-Fish"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/babelfish/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.aullisia.babelfish.BabelFish"
+		],
+		"fabric-datagen": [
+			"dev.aullisia.babelfish.BabelFishDataGenerator"
+		],
+		"client": [
+			"dev.aullisia.babelfish.BabelFishClient"
+		],
+		"modmenu": [
+			"dev.aullisia.babelfish.client.config.BabelFishModMenuIntegration"
+		]
+	},
+	"mixins": [
+		"babelfish.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.6",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*"
+	},
+	"env": {
+		"client": {
+			"depends": {
+				"cloth-config2": "*"
+			}
+		}
+	}
+}
