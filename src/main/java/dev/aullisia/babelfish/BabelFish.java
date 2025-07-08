@@ -1,7 +1,7 @@
 package dev.aullisia.babelfish;
 
 import dev.aullisia.babelfish.network.BabelFishNetwork;
-import dev.aullisia.babelfish.server.config.BabelFishServerConfig;
+import dev.aullisia.babelfish.config.server.BabelFishServerConfig;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -21,8 +21,8 @@ public class BabelFish implements ModInitializer {
 		BabelFishNetwork.register();
 
 		BabelFishServerConfig.load();
-		var serverConfig = BabelFishServerConfig.get();
-		LOGGER.info("Loaded server config. Default language: {}", serverConfig.modoptions.defaultLanguage);
+		var serverConfig = BabelFishServerConfig.getInstance();
+		LOGGER.info("Loaded server config. Default language: {}", serverConfig.defaultLanguage);
 
 		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
 			ServerPlayerEntity player = handler.getPlayer();

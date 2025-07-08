@@ -1,4 +1,4 @@
-package dev.aullisia.babelfish.client.config;
+package dev.aullisia.babelfish.config.client;
 
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;

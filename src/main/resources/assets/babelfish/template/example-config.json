@@ -1,0 +1,14 @@
+{
+  "id": "LibreTranslate",
+  "url": "http://localhost:5000/translate",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "q": "${text}",
+    "source": "${sourceLang}",
+    "target": "${targetLang}"
+  },
+  "responsePath": "translatedText"
+}

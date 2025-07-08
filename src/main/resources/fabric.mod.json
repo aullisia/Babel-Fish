@@ -25,7 +25,7 @@
 			"dev.aullisia.babelfish.BabelFishClient"
 		],
 		"modmenu": [
-			"dev.aullisia.babelfish.client.config.BabelFishModMenuIntegration"
+			"dev.aullisia.babelfish.config.client.BabelFishModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -39,12 +39,5 @@
 	},
 	"suggests": {
 		"modmenu": "*"
-	},
-	"env": {
-		"client": {
-			"depends": {
-				"cloth-config2": "*"
-			}
-		}
 	}
 }

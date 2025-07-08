@@ -1,4 +1,4 @@
-package dev.aullisia.babelfish.server.config;
+package dev.aullisia.babelfish.config.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,20 +9,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Path;
 
-public class BabelFishServerConfig {
+public class BabelFishClientConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Path CONFIG_PATH = Path.of("config", "babelfish-server.json");
+    private static final Path CONFIG_PATH = Path.of("config/babelfish", "babelfish-client.json");
 
-    public ModOptions modoptions = new ModOptions();
+    public String preferredLang = "en";
 
-    public static class ModOptions {
-        public String _comment = "The default language code for players that have not configured it (example: en)";
-        public String defaultLanguage = "en";
-    }
+    private static BabelFishClientConfig INSTANCE = new BabelFishClientConfig();
 
-    private static BabelFishServerConfig INSTANCE = new BabelFishServerConfig();
-
-    public static BabelFishServerConfig get() {
+    public static BabelFishClientConfig get() {
         return INSTANCE;
     }
 
@@ -31,14 +26,11 @@ public class BabelFishServerConfig {
             File file = CONFIG_PATH.toFile();
             if (file.exists()) {
                 try (FileReader reader = new FileReader(file)) {
-                    INSTANCE = GSON.fromJson(reader, BabelFishServerConfig.class);
+                    INSTANCE = GSON.fromJson(reader, BabelFishClientConfig.class);
                 }
-            } else {
-                save();
             }
         } catch (Exception e) {
             BabelFish.LOGGER.warn(e.getMessage());
-            INSTANCE = new BabelFishServerConfig();
         }
     }
 
@@ -54,5 +46,3 @@ public class BabelFishServerConfig {
         }
     }
 }
-
-

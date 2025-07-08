@@ -1,4 +1,4 @@
-package dev.aullisia.babelfish.client.config;
+package dev.aullisia.babelfish.config.client;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
