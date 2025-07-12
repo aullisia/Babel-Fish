@@ -3,6 +3,9 @@ package dev.aullisia.babelfish.config.client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.aullisia.babelfish.BabelFish;
+import dev.aullisia.babelfish.network.packet.SetLanguagePayload;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.MinecraftClient;
 
 import java.io.File;
 import java.io.FileReader;
@@ -40,6 +43,10 @@ public class BabelFishClientConfig {
             file.getParentFile().mkdirs();
             try (FileWriter writer = new FileWriter(file)) {
                 GSON.toJson(INSTANCE, writer);
+            }
+
+            if (MinecraftClient.getInstance().getNetworkHandler() != null) {
+                ClientPlayNetworking.send(new SetLanguagePayload(INSTANCE.preferredLang));
             }
         } catch (Exception e) {
             BabelFish.LOGGER.warn(e.getMessage());

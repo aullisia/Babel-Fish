@@ -45,7 +45,7 @@ public class CustomTranslator extends BaseTranslator {
                     .thenApply(this::extractFromResponse)
                     .exceptionally(ex -> {
                         BabelFish.LOGGER.warn(ex.getMessage());
-                        return "[Translation error]";
+                        return null;
                     });
 
         } catch (Exception e) {
@@ -74,14 +74,16 @@ public class CustomTranslator extends BaseTranslator {
                 if (currentNode != null && currentNode.isValueNode()) {
                     return currentNode.asText();
                 } else {
-                    return "[Translation error: path not found or not a value]";
+                    BabelFish.LOGGER.warn("Failed to extract translation from response: path not found or not a value");
+                    return null;
                 }
             }
 
-            return "[No responsePath defined]";
+            BabelFish.LOGGER.warn("Failed to extract translation from response: responsePath is not defined");
+            return null;
         } catch (Exception e) {
             BabelFish.LOGGER.warn("Failed to extract translation from response: {}", e.getMessage());
-            return "[Translation parse error]";
+            return null;
         }
     }
 

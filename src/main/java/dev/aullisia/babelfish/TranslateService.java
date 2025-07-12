@@ -15,9 +15,9 @@ public class TranslateService {
     }
 
     public static CompletableFuture<String> translateMessage(TranslateParams params) {
-        if (translator == null) return CompletableFuture.completedFuture("[Translation error]");
+        if (translator == null) return CompletableFuture.completedFuture(null);
 
-        BabelFish.LOGGER.info("Translating message from {} to {}: {}", params.from, params.to, params.text);
+        //BabelFish.LOGGER.info("Translating message from {} to {}: {}", params.from, params.to, params.text);
         if (params.from.equalsIgnoreCase(params.to)) {
             return CompletableFuture.completedFuture(params.text);
         }
@@ -31,7 +31,7 @@ public class TranslateService {
                 })
                 .exceptionally(ex -> {
                     BabelFish.LOGGER.warn(ex.getMessage());
-                    return "[Translation error]";
+                    return null;
                 });
     }
 }

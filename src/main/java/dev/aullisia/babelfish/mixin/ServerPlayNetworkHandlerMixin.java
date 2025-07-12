@@ -11,6 +11,8 @@ import net.minecraft.server.filter.TextStream;
 import net.minecraft.server.network.ConnectedClientData;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.HoverEvent;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -121,10 +123,28 @@ public class ServerPlayNetworkHandlerMixin {
                         lang
                 )).thenAccept(translated -> {
                     CompletableFuture<FilteredMessage> completableFuture = this.filterText(signedMessage.getSignedContent());
-                    Text translatedText = Text.literal(translated);
-                    Text text = this.myServer.getMessageDecorator().decorate(this.player, translatedText);
+
+                    Text displayText;
+                    if (translated == null) {
+                        displayText = Text.literal(packet.chatMessage())
+                                .setStyle(Style.EMPTY.withHoverEvent(
+                                        new HoverEvent.ShowText(
+                                                Text.literal("Translation failed from " + originalLanguage)
+                                        )
+                                ));
+                    } else {
+                        displayText = Text.literal(translated)
+                                .setStyle(Style.EMPTY.withHoverEvent(
+                                        new HoverEvent.ShowText(
+                                                Text.literal("Translated from " + originalLanguage + ": " + packet.chatMessage())
+                                        )
+                                ));
+                    }
+
+                    Text decoratedText = this.myServer.getMessageDecorator().decorate(this.player, displayText);
+
                     this.messageChainTaskQueue.append(completableFuture, filtered -> {
-                        SignedMessage signedMessage2 = signedMessage.withUnsignedContent(text).withFilterMask(filtered.mask());
+                        SignedMessage signedMessage2 = signedMessage.withUnsignedContent(decoratedText).withFilterMask(filtered.mask());
                         this.handleDecoratedMessage(signedMessage2, lang);
                     });
                 });

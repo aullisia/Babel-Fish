@@ -92,12 +92,14 @@ public class BabelFishServerConfig {
         if (!dir.exists()) {
             dir.mkdirs();
             createExampleTranslatorConfig();
+            loadTranslatorConfigs();
             return;
         }
 
         File[] jsonFiles = dir.listFiles((d, name) -> name.endsWith(".json"));
         if (jsonFiles == null || jsonFiles.length == 0) {
             createExampleTranslatorConfig();
+            loadTranslatorConfigs();
             return;
         }
 
