@@ -129,7 +129,7 @@ public class ServerPlayNetworkHandlerMixin {
                         displayText = Text.literal(packet.chatMessage())
                                 .setStyle(Style.EMPTY.withHoverEvent(
                                         new HoverEvent.ShowText(
-                                                Text.literal("Translation failed from " + originalLanguage)
+                                                Text.literal("Translation failed from " + originalLanguage + " to " + lang)
                                         )
                                 ));
                     } else {

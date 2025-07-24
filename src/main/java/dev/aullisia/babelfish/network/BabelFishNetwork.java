@@ -22,7 +22,6 @@ public class BabelFishNetwork {
             final String requestedLanguage = payload.language();
 
             Objects.requireNonNull(context.player().getServer()).execute(() -> {
-                UUID uuid = context.player().getUuid();
 
                 String assignedLanguage = requestedLanguage;
 
@@ -32,7 +31,7 @@ public class BabelFishNetwork {
                     BabelFish.LOGGER.info("[DEV] Automatically assigned {} to {}", assignedLanguage, context.player().getName().getString());
                 }
 
-                TranslationPreferences.setLanguage(uuid, assignedLanguage);
+                TranslationPreferences.setLanguage(context.player(), assignedLanguage);
                 BabelFish.LOGGER.info("Set language for player {} to {}", context.player().getName().getString(), assignedLanguage);
             });
         });
