@@ -12,6 +12,16 @@ public class TranslationPreferences {
     private static final Map<UUID, String> playerLanguages = new ConcurrentHashMap<>();
     private static final Set<String> activeLanguages = ConcurrentHashMap.newKeySet();
 
+    public static void forceSetLanguage(ServerPlayerEntity player, String language) {
+        UUID playerId = player.getUuid();
+        String oldLang = playerLanguages.put(playerId, language);
+        activeLanguages.add(language);
+
+        if (oldLang != null && !oldLang.equals(language) && !playerLanguages.containsValue(oldLang)) {
+            activeLanguages.remove(oldLang);
+        }
+    }
+
     public static void setLanguage(ServerPlayerEntity player, String language) {
         UUID playerId = player.getUuid();
         TranslateService.TranslateParams params = new TranslateService.TranslateParams("Hello, World!", "en", language);
@@ -33,7 +43,7 @@ public class TranslationPreferences {
     }
 
     public static String getLanguage(UUID playerId) {
-        return playerLanguages.getOrDefault(playerId, "en_us");
+        return playerLanguages.getOrDefault(playerId, "en");
     }
 
     public static void removePlayer(UUID playerId) {
@@ -59,5 +69,9 @@ public class TranslationPreferences {
             }
         }
         return matchingPlayers;
+    }
+
+    public static boolean hasPreferences(UUID playerId) {
+        return playerLanguages.containsKey(playerId);
     }
 }

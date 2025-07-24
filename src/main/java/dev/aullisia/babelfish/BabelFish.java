@@ -24,6 +24,14 @@ public class BabelFish implements ModInitializer {
 		var serverConfig = BabelFishServerConfig.getInstance();
 		LOGGER.info("Loaded server config. Default language: {}", serverConfig.defaultLanguage);
 
+		ServerPlayConnectionEvents.JOIN.register((handler, packetSender, server) -> {
+			server.execute(() -> {
+				ServerPlayerEntity player = handler.getPlayer();
+				if (TranslationPreferences.hasPreferences(player.getUuid())) return;
+				TranslationPreferences.forceSetLanguage(player, BabelFishServerConfig.getInstance().defaultLanguage);
+			});
+		});
+
 		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
 			ServerPlayerEntity player = handler.getPlayer();
 			var uuid = player.getUuid();
